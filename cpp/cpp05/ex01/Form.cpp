@@ -16,7 +16,7 @@ Form & Form::operator=(Form const &)
     return (*this);
 }
 
-const char* Form::AlreadySigned::what() const throw
+const char* Form::AlreadySigned::what() const throw()
 {
     return ("Form: Already Signed!");
 }

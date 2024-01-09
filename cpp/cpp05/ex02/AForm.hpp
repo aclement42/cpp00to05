@@ -5,7 +5,7 @@
 
 class Bureaucrat;
 
-class Form
+class AForm
 {
     private:
         std::string const _name;
@@ -14,13 +14,13 @@ class Form
         int         const _gradeexec;
 
     public:
-        Form();
-        virtual ~Form();
-        Form(Form const & obj);
-        Form & operator=(Form const &);
-        Form(std::string name, int gradesigned, int gradeexec);
+        AForm();
+        virtual ~AForm();
+        AForm(AForm const & obj);
+        AForm & operator=(AForm const &);
+        AForm(std::string name, int gradesigned, int gradeexec);
 
-        std::string         getNameForm() const;
+        std::string         getNameAForm() const;
         bool                getIssigned() const;
         int                 getGradesigned() const;
         int                 getGradexec() const;
@@ -48,8 +48,12 @@ class Form
             public:
                 virtual const char* what() const throw();
         };
-        
+        class   ExecuteProblem : public std::exception
+        {
+            public:
+                const char* what() const throw();
+        };
         
 };
 
-std::ostream &operator<<(std::ostream &out, Form const & src);
+std::ostream &operator<<(std::ostream &out, AForm const & src);

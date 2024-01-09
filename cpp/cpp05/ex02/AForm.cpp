@@ -1,96 +1,101 @@
 
-#include "Form.hpp"
+#include "AForm.hpp"
 
-Form::Form(Form const & obj) : _name(obj._name), _issigned(false), _gradesign(obj._gradesign), _gradeexec(obj._gradeexec)
+AForm::AForm(AForm const & obj) : _name(obj._name), _issigned(false), _gradesign(obj._gradesign), _gradeexec(obj._gradeexec)
 {
     *this = obj;
-    std::cout << "Form: Copy constructor called" << std::endl;
+    std::cout << "AForm: Copy constructor called" << std::endl;
 }
 
-Form & Form::operator=(Form const &)
+AForm & AForm::operator=(AForm const &)
 {
     //if (this != &rhs)
     //    this->_issigned = rhs._issigned;
-    std::cout << "Form: Copy assignment operator constructor called" << std::endl;
-    throw Form::Copyexception();
+    std::cout << "AForm: Copy assignment operator constructor called" << std::endl;
+    throw AForm::Copyexception();
     return (*this);
 }
 
-const char* Form::AlreadySigned::what() const throw
+const char* AForm::AlreadySigned::what() const throw()
 {
-    return ("Form: Already Signed!");
+    return ("AForm: Already Signed!");
 }
 
-const char* Form::Copyexception::what() const throw()
+const char* AForm::Copyexception::what() const throw()
 {
-    return ("Form: Copy would be incomplete!");
+    return ("AForm: Copy would be incomplete!");
 }
 
-const char* Form::GradeTooHighException::what() const throw()
+const char* AForm::GradeTooHighException::what() const throw()
 {
-    return ("Form: Grade too high!");
+    return ("AForm: Grade too high!");
 }
 
-const char* Form::GradeTooLowException::what() const throw()
+const char* AForm::GradeTooLowException::what() const throw()
 {
-    return ("Form: Grade too low!");
+    return ("AForm: Grade too low!");
 }
 
-bool    Form::getIssigned() const
+bool    AForm::getIssigned() const
 {
     return (this->_issigned);
 }
 
-int     Form::getGradexec() const
+int     AForm::getGradexec() const
 {
     return (this->_gradeexec);
 }
 
-int     Form::getGradesigned() const
+int     AForm::getGradesigned() const
 {
     return (this->_gradesign);
 }
 
-std::string Form::getNameForm() const
+std::string AForm::getNameAForm() const
 {
     return (this->_name);
 }
 
-Form::Form() : _name("Unknown Form"), _issigned(false), _gradesign(150), _gradeexec(150)
+AForm::AForm() : _name("Unknown AForm"), _issigned(false), _gradesign(150), _gradeexec(150)
 {
-    std::cout << "Form default constructor called" << std::endl;
+    std::cout << "AForm default constructor called" << std::endl;
 }
 
-Form::Form(std::string name, int gradesigned, int gradeexec) : _name(name), _gradesign(gradesigned), _gradeexec(gradeexec)
+AForm::AForm(std::string name, int gradesigned, int gradeexec) : _name(name), _gradesign(gradesigned), _gradeexec(gradeexec)
 {
     this->_issigned = false;
     if (gradesigned < 1 || gradeexec < 1)
-        throw Form::GradeTooHighException();
+        throw AForm::GradeTooHighException();
     if (gradeexec > 150 || gradesigned > 150)
-        throw Form::GradeTooLowException();
-    std::cout << getNameForm() << "'s Form constructor called with gradesigne: " << getGradesigned() << ", and gradeexec: " << getGradexec() << "!" << std::endl;
+        throw AForm::GradeTooLowException();
+    std::cout << getNameAForm() << "'s AForm constructor called with gradesigne: " << getGradesigned() << ", and gradeexec: " << getGradexec() << "!" << std::endl;
 }
 
-Form::~Form()
+AForm::~AForm()
 {
-    std::cout << "Form default destructor called" << std::endl;
+    std::cout << "AForm default destructor called" << std::endl;
 }
 
-void    Form::beSigned(Bureaucrat & brc)
+void    AForm::beSigned(Bureaucrat & brc)
 {
     if (this->_issigned == false)
     {
         if (brc.getGrade() > this->_gradesign)
-            throw Form::GradeTooLowException();
+            throw AForm::GradeTooLowException();
         else
             this->_issigned = true;
     }
     else
-        throw Form::AlreadySigned();
+        throw AForm::AlreadySigned();
 }
 
-std::ostream &operator<<(std::ostream &out, Form const &f)
+std::ostream &operator<<(std::ostream &out, AForm const &f)
 {
-    out << f.getNameForm() << "::grade signed: " << f.getGradesigned() << ", grade exec: " << f.getGradexec() << ", signe status: " << f.getIssigned() << "." << std::endl;
+    out << f.getNameAForm() << "::grade signed: " << f.getGradesigned() << ", grade exec: " << f.getGradexec() << ", signe status: " << f.getIssigned() << "." << std::endl;
     return (out);
+}
+
+const char* AForm::ExecuteProblem::what() const throw()
+{
+    return ("AForm: something went wrong!");
 }

@@ -76,3 +76,4 @@ std::ostream &operator<<(std::ostream &out, Bureaucrat const & src)
     out << src.getName() << " , bureaucrat grade " << src.getGrade() << "." << std::endl;
     return (out);
 }
+

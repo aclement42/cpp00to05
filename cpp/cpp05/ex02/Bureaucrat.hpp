@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "Form.hpp"
+#include "AForm.hpp"
 
-class Form;
+class AForm;
 
 class    Bureaucrat
 {
@@ -23,8 +23,8 @@ class    Bureaucrat
 
         void        IncrementGrade(void);
         void        DecrementGrade(void);
-        void        signForm(Form & form);
-
+        void        signForm(AForm & form);
+        void        executeForm(AForm const & form);
         class       GradeTooHighException : public std::exception
         {
             public:
