@@ -15,7 +15,7 @@ class Form
 
     public:
         Form();
-        ~Form();
+        virtual ~Form();
         Form(Form const & obj);
         Form & operator=(Form const &);
         Form(std::string name, int gradesigned, int gradeexec);
@@ -26,6 +26,7 @@ class Form
         int                 getGradexec() const;
 
         void                beSigned(Bureaucrat & brc);
+        virtual void execute(Bureaucrat const & executor) const = 0;
         class Copyexception : public std::exception
         {
             public:

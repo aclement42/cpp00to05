@@ -8,8 +8,16 @@ int main()
     Bureaucrat d("Simon", 2);
     Form  b("F2", 70, 50);
     Form  c("F3", 70, 129);
-
-    std::cout << "\x1b[38;5;221m********************GRADE THAT WORK********************\x1b[0m" << std::endl;
+    
+    try
+    {
+        b = c;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    std::cout << "\x1b[38;5;221m********************GRADE TOO LOW********************\x1b[0m" << std::endl;
     try
     {
         //std::cout << a.getName() << ": grade: " << a.getGrade() << std::endl;
@@ -22,11 +30,13 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
-    std::cout << "\x1b[38;5;221m********************GRADE TOO LOW**********************\x1b[0m" << std::endl;
+    std::cout << "\x1b[38;5;221m********************GRADE THAT WORKS**********************\x1b[0m" << std::endl;
     try
     {
-        std::cout << d.getName() << ": grade: " << d.getGrade() << std::endl;
-        std::cout << "garde signed: " << c.getGradesigned() << " grade Exec: " << c.getGradexec() << std::endl;
+        //std::cout << d.getName() << ": grade: " << d.getGrade() << std::endl;
+        std::cout << d;
+        //std::cout << "garde signed: " << c.getGradesigned() << " grade Exec: " << c.getGradexec() << std::endl;
+        std::cout << c; 
         d.signForm(c);
     }
     catch(const std::exception& e)
