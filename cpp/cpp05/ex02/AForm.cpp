@@ -97,5 +97,15 @@ std::ostream &operator<<(std::ostream &out, AForm const &f)
 
 const char* AForm::ExecuteProblem::what() const throw()
 {
-    return ("AForm: something went wrong!");
+    return ("the grade of the bureaucrat attempting to execute the form is not high enough!");
+}
+
+const char* AForm::Isnotsigned::what() const throw()
+{
+    return ("the form is not signed!");
+}
+
+const char* AForm::FileProblems::what() const throw()
+{
+    return ("something went wrong about opening file!");
 }

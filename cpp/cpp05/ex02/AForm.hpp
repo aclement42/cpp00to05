@@ -48,7 +48,17 @@ class AForm
             public:
                 virtual const char* what() const throw();
         };
+        class Isnotsigned : public std::exception
+        {
+            public:
+                const char* what() const throw();
+        };
         class   ExecuteProblem : public std::exception
+        {
+            public:
+                const char* what() const throw();
+        };
+        class   FileProblems : public std::exception
         {
             public:
                 const char* what() const throw();

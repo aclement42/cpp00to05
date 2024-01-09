@@ -7,38 +7,15 @@
 class PresidentialPardonForm
 {
     private:
-        /* data */
+        std::string _target;
     public:
         PresidentialPardonForm();
         ~PresidentialPardonForm();
         PresidentialPardonForm(PresidentialPardonForm const & obj);
         PresidentialPardonForm & operator=(PresidentialPardonForm const & rhs);
-        void        pardoned() const;
+        
+        PresidentialPardonForm(std::string target);
+        void        execute(Bureaucrat const & executor) const;
 };
 
 #include "PresidentialPardonForm.hpp"
-
-PresidentialPardonForm::PresidentialPardonForm()
-{
-    std::cout << "PresidentialPardonForm default constructor called" << std::endl;
-}
-
-PresidentialPardonForm::~PresidentialPardonForm()
-{
-    std::cout << "PresidentialPardonForm default constructor called" << std::endl;
-}
-
-PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const & obj)
-{
-    *this = obj;
-}
-
-PresidentialPardonForm & PresidentialPardonForm::operator=(PresidentialPardonForm const & rhs)
-{
-    return (*this);
-}
-
-void    PresidentialPardonForm::pardoned() const
-{
-    std::cout << << " has been pardoned by Zaphod Beeblebrox." << std::endl;
-}
