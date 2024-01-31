@@ -99,7 +99,12 @@ void    convertfloat(std::string type)
 void    convertint(std::string type)
 {
    // std::cout << "is an int" << std::endl;
-    long long int nb = atoll(type.c_str());
+   std::stringstream ss(type);
+    long long int nb;
+
+    ss >> nb; 
+
+//atoll(type.c_str());
 
     if (nb < -2147483648 || nb > 2147483647)
     {
