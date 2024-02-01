@@ -40,7 +40,7 @@ int     keeprecision(std::string type)
 {
     int i = 0;
     int precision = 0;
-    while (type[i] != '.')
+    while (type[i] && type[i] != '.')
         i++;
     while (type[++i])
         precision++;
@@ -51,7 +51,7 @@ void    convertdouble(std::string type)
 {
     // std::cout << "is an double" << std::endl;
     std::stringstream ss(type);
-    double nb;
+    long double nb;
     ss >> nb;
 
     if ((nb >= 0 && nb < 32 )|| nb == 127)
@@ -68,8 +68,9 @@ void    convertdouble(std::string type)
    //     nb == (-1 * std::numeric_limits<double>::infinity()))
    //     std::cout << "float: inff" << std::endl;
    // else
+   std::cout << "Debug convert doubble" << std::endl;
     std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << static_cast<float>(nb) << "f" << std::endl;
-    std::cout << "double:\t" << std::fixed  << std::setprecision(keeprecision(type)) << std::scientific << nb  << std::endl;
+    std::cout << "double:\t" << std::fixed  << std::setprecision(keeprecision(type)) << std::scientific << static_cast<double>(nb) << std::endl;
     
 }
 
@@ -77,11 +78,11 @@ void    convertfloat(std::string type)
 {
     // std::cout << "is a float" << std::endl;
     std::stringstream ss(type);
-    float   nb;
+    long double   nb;
     ss >> nb;
-    long int fInt    = static_cast<int>(nb);
+    long int fInt    = static_cast<long int>(nb);
     
-    std::cout << fInt << std::endl;
+    // std::cout << fInt << std::endl;
     if ((nb >= 0 && nb < 32 )|| nb == 127)
         std::cout << "char: Non displayable" << std::endl;
     else if (nb < 0 || nb > 127)
@@ -92,11 +93,11 @@ void    convertfloat(std::string type)
         std::cout << "int: impossible" << std::endl;
     else
         std::cout << "int:\t" << fInt << std::endl;
-    std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << nb << "f" << std::endl;
+    std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << static_cast<float>(nb) << "f" << std::endl;
     std::cout << "double:\t" << std::fixed  << std::setprecision(keeprecision(type)) << std::scientific << static_cast<double>(nb) << std::endl;
 }
 
-void    convertint(std::string type)
+int    convertint(std::string type)
 {
    // std::cout << "is an int" << std::endl;
    std::stringstream ss(type);
@@ -108,8 +109,8 @@ void    convertint(std::string type)
 
     if (nb < -2147483648 || nb > 2147483647)
     {
-        std::cout << "Error: -2147483648 < int < 2147483647" << std::endl;
-        return ;
+        // std::cout << "Error: -2147483648 < int < 2147483647" << std::endl;
+        return (1);
     }
     if ((nb >= 0 && nb < 32) || nb == 127)
         std::cout << "char: Non displayable" << std::endl;
@@ -120,6 +121,7 @@ void    convertint(std::string type)
     std::cout << "int: " << nb << std::endl;
     std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(nb) << "f" << std::endl;
     std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(nb) << std::endl;
+    return (0);
 }
 
 bool isachar(std::string type)
@@ -134,7 +136,7 @@ bool isachar(std::string type)
 bool isadigit(std::string type)
 {
     int i = 0;
-    if (type[i] == '-')
+    if (type[i] == '-' || type[i] == '+')
         i++;
     while (type[i])
     {
@@ -150,7 +152,7 @@ bool isadigit(std::string type)
 bool    isadouble(std::string type)
 {
     int i = 0;
-    if (type[0] == '-')
+    if (type[0] == '-' || type[0] == '+')
         i++;
     while (type[i])
     {
@@ -180,7 +182,7 @@ bool isafloat(std::string type)
 {
     int i = 0;
     int size = type.size();
-    if (type[i] == '-')
+    if (type[i] == '-' || type[i] == '+')
         i++;
     while (type[i])
     {
@@ -239,7 +241,10 @@ void  ScarlarConverter::convert(std::string type)
     else if (isachar(type) == 1)
         convertchar(type);
     else if (isadigit(type) == 1)
-        convertint(type);
+    {
+        if (convertint(type) == 1)
+            convertdouble(type);
+    }
     else if (isadouble(type) == 1)
         convertdouble(type);
     else if (isafloat(type) == 1)
@@ -251,6 +256,11 @@ void  ScarlarConverter::convert(std::string type)
     else if (type == "-inf" || type == "-inff")
         convertinfneg();
     else
-        std::cout << "Error: paramter has to be char, int, float, or double type!" << std::endl;
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: nanf" << std::endl;
+        std::cout << "double: nan" << std::endl;
+    }
 }
 

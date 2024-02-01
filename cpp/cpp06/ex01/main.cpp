@@ -6,6 +6,8 @@ int main()
 	uintptr_t obj_ptr;
 	obj.setData("Holding your data securely");
 
+	Data objCopy;
+
 	std::cout << "Content of Data: " << obj.getData() << std::endl;
 	std::cout << "Address of object obj:" << &obj << std::endl;
 	std::cout << "Casting Data object to uintptr_t" << std::endl;
@@ -21,5 +23,8 @@ int main()
 	else
 		std::cout << "Something went wrong. Like super bad stuff" << std::endl;
 
+	// objCopy = *((Data *)(void *)(uintptr_t)(obj_ptr));
+	objCopy = *(Serializer::deserialize(obj_ptr));
+	std::cout << "Copy of data: " << objCopy.getData() << std::endl;
 	return 0;
 }

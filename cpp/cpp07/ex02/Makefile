@@ -1,14 +1,12 @@
-NAME = ex00
+NAME = ex02
 
-CXXFLAGS = -MMD -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 CXX = c++
 
 SRC = main.cpp \
-	ScalarConverter.cpp \
 
 OBJ = $(SRC:.cpp=.o)
-DEP = $(SRC:.cpp=.d)
 
 all : $(NAME)
 
@@ -19,7 +17,7 @@ $(NAME) : $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean :
-	rm -rf $(OBJ) $(DEP)
+	rm -rf $(OBJ)
 
 fclean : clean
 	rm -rf $(NAME)
@@ -28,5 +26,3 @@ re : fclean
 	make
 
 .PHONY : clean fclean re all
-
--include $(DEP)

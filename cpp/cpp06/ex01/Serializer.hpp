@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdint.h>
 
+
 typedef struct s_Data
 {
     uintptr_t n;
