@@ -11,14 +11,14 @@ template<typename U, typename V>
 U foo(V param)
 {
     //(void)param;
-    //int nb = 0;
+    int nb = static_cast<U>(param);
 //
     //while (nb < 10)
     //{
-        std::cout << static_cast<float>(param) << std::endl;
+        std::cout << nb << std::endl;
       //  nb++;
     // }
-    return ;
+    return (nb);
    // return ;
 }
 
