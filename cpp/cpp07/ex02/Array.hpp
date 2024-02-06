@@ -8,8 +8,8 @@ template<typename T>
 class Array
 {
 private:
+    T   *_arr;
     unsigned int _size;
-    T   *_element;
 public:
     Array(void);
     Array(unsigned int n);
@@ -34,35 +34,42 @@ public:
 template<typename T>
 T & Array<T>::operator[](unsigned int index)
 {
-    if (index > this->_size)
+    if (index < 0 || index >= this->_size)
         throw Array::ErrorIndex();
-    return (this->_element[index]);
+    return (this->_arr[index]);
 }
 
 template<typename T>
-Array<T>::Array(Array<T> const & obj)
+Array<T>::Array(Array<T> const & obj) : _arr(new T[obj._size]), _size(obj._size)
 {
     std::cout << "Copy constructor called" << std::endl;
-    *this = obj;
+    for (unsigned int i = 0; i < _size; i++)
+        this->_arr[i] = obj._arr[i];
 }
 
 template<typename T>
 Array<T> & Array<T>::operator=(Array<T> const & rhs)
 {
-    this->_size = rhs._size;
-    this->_element = rhs._element;
+    if (this != &rhs)
+    {
+        delete[] (this->_arr);
+        this->_size = rhs._size;
+        this->_arr = new T[this->_size];
+        for (unsigned int i = 0; i < rhs._size; i++)
+            this->_arr[i] = rhs._arr[i];
+    }
     return (*this);
 }
 
 template<typename T>
-Array<T>::Array() : _size(0), _arr(new T[0])
+Array<T>::Array() :  _arr(NULL), _size(0)
 {
     std::cout << "default constructor is called" << std::endl;
     return ;
 }
 
 template<typename T>
-Array<T>::Array(unsigned int n) : _size(n), _arr(new T[n])
+Array<T>::Array(unsigned int n) : _arr(new T[n]), _size(n)
 {
     std::cout << "Unsigned int constructor is called" << std::endl;
     return ;
@@ -71,7 +78,7 @@ Array<T>::Array(unsigned int n) : _size(n), _arr(new T[n])
 template<typename T>
 Array<T>::~Array()
 {
-    delete[] _arr;
+    delete[] this->_arr;
     std::cout << "default destructor is called" << std::endl;
 }
 

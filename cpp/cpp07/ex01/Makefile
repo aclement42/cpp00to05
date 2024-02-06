@@ -1,23 +1,24 @@
 NAME = ex01
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -MMD -Wall -Wextra -Werror -std=c++98
 
 CXX = c++
 
 SRC = main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
+DEP = $(SRC:.cpp=.d)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) 
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean :
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(DEP)
 
 fclean : clean
 	rm -rf $(NAME)
@@ -26,3 +27,5 @@ re : fclean
 	make
 
 .PHONY : clean fclean re all
+
+-include $(DEP)
