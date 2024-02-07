@@ -6,7 +6,13 @@ template<typename Y>
 void  add_two(Y &x)
 {
     x += 2;
-    // std::cout << "add2:" << x << std::endl;
+}
+
+template<typename Y>
+void  add_two2(Y &x)
+{
+    for (int i = 0; x[i]; i++)
+        add_two(x[i]);
 }
 
 template<typename Y>

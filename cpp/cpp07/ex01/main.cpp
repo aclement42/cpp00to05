@@ -42,7 +42,7 @@ int main()
      i++;
  }
  std::cout << "AFTER ITER CALLED" << std::endl;
- iter(tabString, 3, add_two<std::string>);
+ iter(tabString, 3, add_two2<std::string>);
  iter(tabString, 3, foo<std::string>);
 
  std::cout << std::endl;
