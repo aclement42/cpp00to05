@@ -2,30 +2,21 @@
 
 #include <iostream>
 
-//template< typename U >
-// void foo(U t)
-// {
-    // std::cout << "foo: " << t << std::endl;
-// }
-template<typename U, typename V>
-U foo(V param)
+template<typename Y>
+void  add_two(Y &x)
 {
-    //(void)param;
-    U nb = param;
-    //while (nb < 10)
-    std::cout << static_cast<U>(param) << std::endl;
-    return (nb);
+    x += 2;
+    // std::cout << "add2:" << x << std::endl;
 }
 
 template<typename Y>
-void foo(Y param)
+void foo(Y &element)
 {
-    std::cout << param << std::endl;
-    return ;
+    std::cout << element << std::endl;
 }
 
 template< typename U, typename V >
-void    iter(U *addr, int lenght, void (*foo)(V &))
+void    iter(U *addr, int lenght, void (*f)(V&))
 {
     if (!addr || !lenght)
     {
@@ -35,7 +26,7 @@ void    iter(U *addr, int lenght, void (*foo)(V &))
     else
     {
         for (int i = 0; i < lenght; i++)
-            foo((addr[i]));
+            f((addr[i]));
     }
 }
 

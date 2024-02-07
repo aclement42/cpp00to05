@@ -3,23 +3,37 @@
 int main()
 {
  
- double tab[10];
+ int tab[10];
  int i = 0;
- 
+ std::cout << "---TAB INT TEST---" << std::endl;
  while (i < 10)
  {
      tab[i] = i + 0.1;
      std::cout << tab[i] << std::endl;
      i++;
  }
- iter(tab, 10, foo<int, double>);
- 
+ std::cout << "AFTER ITER CALLED" << std::endl;
+ iter(tab, 10, add_two<int>);
+ iter(tab, 10, foo<int>);
+
+ std::cout << "---NUMBERFLOAT FLOAT TEST---" << std::endl;
+ float numberfloat[7];
+ for (int j = 0; j < 7; j++)
+ {
+   numberfloat[j] = j - 42.42f;
+   std::cout << numberfloat[j] << std::endl;
+ }
+  std::cout << "AFTER ITER CALLED" << std::endl;
+  iter(numberfloat, 7, add_two<float>);
+  iter(numberfloat, 7, foo<float>);
+
  std::cout << std::endl;
+ std::cout << "---TABSTRING STRING TEST---" << std::endl;
 
  std::string tabString[3];
- tabString[0] = "lundi";
- tabString[1] = "mardi";
- tabString[2] = "mercredi";
+ tabString[0] = "abc";
+ tabString[1] = "xyz";
+ tabString[2] = "123";
  i = 0;
  
  while (i < 3)
@@ -27,7 +41,13 @@ int main()
      std::cout << tabString[i] << std::endl;
      i++;
  }
-//iter(tabString, 3, foo<void, std::string>);
+ std::cout << "AFTER ITER CALLED" << std::endl;
+ iter(tabString, 3, add_two<std::string>);
+ iter(tabString, 3, foo<std::string>);
+
+ std::cout << std::endl;
+
+
  return (0);
 }
 
