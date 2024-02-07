@@ -74,7 +74,9 @@ int main(int, char**)
 	IntArray[8] = 9;
 	IntArray[9] = 10;
 	IntArray[10] = 11;
+	IntArray[11] = 17;
 	IntArray[12] = 11;
+
 	std::cout << "size: " << IntArray.size() << std::endl;
 	std::cout << std::endl << "Value of the int array: \n" << std::endl;
 	for (int i = 0; i < 13; i++)
@@ -93,7 +95,7 @@ int main(int, char**)
 		stringArray[7] = "Dimanche";
 		stringArray[8] = "Dimanche";
 		stringArray[9] = "Dimanche";
-		//stringArray[10] = "Dimanche";
+		// stringArray[10] = "Dimanche";
 		
 	}
 	catch(const std::exception& e)

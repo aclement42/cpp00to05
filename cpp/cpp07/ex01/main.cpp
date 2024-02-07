@@ -1,5 +1,24 @@
 #include "iter.hpp"
 
+template<typename Y>
+void  add_two(Y &x)
+{
+    x += 2;
+}
+
+template<typename Y>
+void  add_two2(Y &x)
+{
+    for (int i = 0; x[i]; i++)
+        add_two(x[i]);
+}
+
+template<typename Y>
+void foo(Y &element)
+{
+    std::cout << element << std::endl;
+}
+
 int main()
 {
  
