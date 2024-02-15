@@ -5,6 +5,7 @@ CXXFLAGS = -MMD -Wall -Wextra -Werror -std=c++98
 CXX = c++
 
 SRC = main.cpp \
+	Span.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 DEP = $(SRC:.cpp=.d)
