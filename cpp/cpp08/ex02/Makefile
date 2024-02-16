@@ -6,12 +6,14 @@ CXX = c++
 
 SRC = main.cpp \
 
+INC = MutantStack.tpp 
+
 OBJ = $(SRC:.cpp=.o)
 DEP = $(SRC:.cpp=.d)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) $(INC)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 %.o : %.cpp
