@@ -4,9 +4,16 @@
 #include <stdexcept>
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <map>
+
 
 class BitcoinExchange
 {
+    private:
+        std::map<std::string, double> _data; // Conteneur pour stocker les dates et leurs valeurs
+        std::string date_to_find;
+        std::string value_to_multi;
     public:
         BitcoinExchange();
         ~BitcoinExchange();
@@ -21,6 +28,11 @@ class BitcoinExchange
         bool check_day(std::string date, int pos);
         std::string keep_value(std::string line, int pos);
         bool check_value(std::string str);
+        void getdate(const std::string& filename);
+        double getvalue(const std::string& date) const;
+        void    printdata(void) const;
+        void    recup_line_and_launch(std::string line);
+
 
 
 

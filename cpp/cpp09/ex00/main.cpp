@@ -16,6 +16,7 @@ int main(int ac, char **av)
     }
     else
     {
+        btc.getdate("data.csv");
         btc.verif_extension(av[1]);
     }
     return (0);
