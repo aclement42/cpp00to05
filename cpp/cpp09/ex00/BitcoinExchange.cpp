@@ -208,7 +208,7 @@ void    BitcoinExchange::recup_line_and_launch(std::string line)
             std::cout << date_to_find << " => " << value << " = " << (itPrec->second) * value << "." << std::endl;
         }
         else// Si itPrec est au début, il n'y a pas de clé précédente
-            std::cout << "Il n'y a pas de clé précédente la plus proche." << std::endl;
+            std::cout << date_to_find << " => Il n'y a pas de clé précédente la plus proche." << std::endl;
     }
     else
         std::cout << date_to_find << " => " << value << " = " << (it->second) * value << "." << std::endl;
@@ -277,11 +277,11 @@ void BitcoinExchange::getdate(const std::string& filename)
         file.close();
     }
 
-void BitcoinExchange::printdata() const {
-        for (std::map<std::string, double>::const_iterator it = _data.begin(); it != _data.end(); ++it) {
-            std::cout << "Date: " << it->first << ", Valeur: " << it->second << std::endl;
-        }
-    }
+// void BitcoinExchange::printdata() const {
+        // for (std::map<std::string, double>::const_iterator it = _data.begin(); it != _data.end(); ++it) {
+            // std::cout << "Date: " << it->first << ", Valeur: " << it->second << std::endl;
+        // }
+    // }
 
 void    BitcoinExchange::verif_extension(std::string str)
 {
