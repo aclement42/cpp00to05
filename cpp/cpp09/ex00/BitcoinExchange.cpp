@@ -51,7 +51,7 @@ bool BitcoinExchange::check_year(std::string date)
         year += date[i];
     }
     int int_year = atoi(year.c_str());
-    if (int_year < 2009 || int_year > 2022)
+    if (int_year < 2009) // || int_year > 2022)
         return (0);
     // std::cout << "year:" << year << std::endl;
     return (1);
@@ -150,9 +150,9 @@ bool BitcoinExchange::check_line(std::string line)
     try
     {
         if (date == "NULL")
-            throw BitcoinExchange::BitcoinExceptions("Error: there is a pipe mistake in file.txt");
+            throw BitcoinExchange::BitcoinExceptions("Error: there is a pipe mistake in this line");
         else if (date.length() != 11 || line.length() < 14)
-            throw BitcoinExchange::BitcoinExceptions("Error: there is a pipe position mistake in file.txt");
+            throw BitcoinExchange::BitcoinExceptions("Error: there is a size mistake in this line");
         else if (check_year(date) == 0)
             throw BitcoinExchange::BitcoinExceptions("Error: keep a year format as : 2008 < \'XXXX\' < 2023");
         else if (check_tilde_space(date, 4, '-') == 0)
@@ -205,13 +205,13 @@ void    BitcoinExchange::recup_line_and_launch(std::string line)
         if(itPrec != _data.begin())
         {
             --itPrec;
-            std::cout << date_to_find << " => " << value << " = " << (itPrec->second) * value << "." << std::endl;
+            std::cout << date_to_find << " => " << value << " = " << (itPrec->second) * value << std::endl;
         }
         else// Si itPrec est au début, il n'y a pas de clé précédente
-            std::cout << date_to_find << " => Il n'y a pas de clé précédente la plus proche." << std::endl;
+            std::cout << date_to_find << " => Il n'y a pas de valeur précédente la plus proche." << std::endl;
     }
     else
-        std::cout << date_to_find << " => " << value << " = " << (it->second) * value << "." << std::endl;
+        std::cout << date_to_find << " => " << value << " = " << (it->second) * value << std::endl;
 }
 
 void   BitcoinExchange::parse(std::string str)

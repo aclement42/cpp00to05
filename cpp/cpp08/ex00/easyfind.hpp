@@ -5,6 +5,9 @@
 # include <iostream>
 # include <vector>
 # include <algorithm>
+# include <list>
+# include <deque>
+
 class   easyexception
 {
     public:
@@ -26,5 +29,19 @@ class   easyexception
                 }
         };
 };
+
+
+template< typename T>
+int    easyfind(T container,int nb)
+{
+    typename T::iterator it;
+
+    if (container.empty() == true)
+        throw easyexception::emptycont();
+    it = find(container.begin(), container.end(), nb);
+    if (it == container.end())
+        throw easyexception::notfind();
+    return (*it);
+}
 
 #endif

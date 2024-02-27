@@ -14,12 +14,12 @@ class  RPN
         ~RPN();
 
         void    parse(std::string const & str);
-        bool    verify_occurence(std::string const & str);
+        void    verify_occurence(std::string const & str);
         bool    IsDigit(char c);
         bool    IsOperand(char c);
-        bool    verify_space_position(std::string const & str);
-        bool    execute_algo(std::string str);
-        void    case_operator(double a, double  b, char ope);
+        void    verify_space_position(std::string const & str);
+        void    execute_algo(std::string str);
+        bool    case_operator(double a, double  b, char ope);
 
 
 
