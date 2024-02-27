@@ -14,6 +14,8 @@ class   PmergeMe
     private:
         std::vector<unsigned int> _vector;
         std::deque<unsigned int> _deque;
+        bool            flagImpair;
+        unsigned int    impair;
 		// timeval time_start;
 		// timeval time_end;
 		double time;
@@ -31,7 +33,10 @@ class   PmergeMe
         void	fordJohnsonSort(T &_arr);
         void    algo();
 
-
+        template<typename T>
+        void    straggler(T &arr);
+        template<typename T>
+        void    creating_pair(T &arr);
 
         // bool    verify_str(std::string const & str);
         // bool    verify_spaces(std::string const & str);
