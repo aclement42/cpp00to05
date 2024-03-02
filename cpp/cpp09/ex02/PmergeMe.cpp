@@ -50,7 +50,7 @@ int    PmergeMe::verif_ui(std::string const & str)
     if (ulVal < 0 || ulVal > 4294967295)
         return (0);
     unsigned int uVal = static_cast<unsigned int>(ulVal);
-    std::cout << "Unsigned :" << uVal << std::endl;
+    // std::cout << "Unsigned :" << uVal << std::endl;
     try
     {
         if (std::find(this->_deque.begin(), this->_deque.end(), uVal) != this->_deque.end())
@@ -70,9 +70,10 @@ int    PmergeMe::verif_ui(std::string const & str)
 template <typename T>
 void    PmergeMe::print_arr(T &arr, int i)
 {
+    // std::cout << "size: " << arr.size() << std::endl;
     if (i == 1)
         std::cout << "Before: ";
-    else
+    else if (i == 2)
         std::cout << "After: ";
     for (unsigned int i = 0; i < arr.size(); i++)
         std::cout << arr[i] << " ";
@@ -87,89 +88,230 @@ void    PmergeMe::straggler(T &arr)
         this->flagImpair = 1;
         this->impair = arr.back();
         arr.pop_back();
-        std::cout << this->impair << std::endl;
+        std::cout << "keeping impair value: m" << this->impair << std::endl;
     }
 }
 
 template <typename T>
-void    PmergeMe::creating_pair(T &arr)
+void    PmergeMe::printf_array(T &array, int size)
 {
-    int nbOfPairs = arr.size() / 2;
-    T<T<int>> array;
+    std::cout << size << std::endl;
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << array[i][0] << ", " << array[i][1] << std::endl;
+
+    }
+}
+
+void    PmergeMe::creating_pair_vec(std::vector<unsigned int> _vec)
+{
+    int nbOfPairs = _vec.size() / 2;
+    // mstd::cout << nbOfPairs << std::endl;
+    std::vector<std::vector<unsigned int> >array;
     // std::vector<std::vector<int>> array
 
-    for (int i = 0; i < nbOfPairs; i++)
+    for (size_t i = 0; i < _vec.size(); i += 2)
     {
-        T<int> tmp;
+        std::vector<unsigned int>tmp;
+        // std::cout << "i: " << i << std::endl;
 
-        tmp.push(arr[i]);
-        tmp.push(arr[i + 1]);
-        array.push(tmp);
+        if (_vec[i] > _vec[i + 1])
+            std::swap(_vec[i], _vec[i + 1]);
+        tmp.push_back(_vec[i]);
+        tmp.push_back(_vec[i + 1]);
+        array.push_back(tmp);
+    }
+    std::cout << "---BEFORE VEC----" << std::endl;
+    this->printf_array(array, nbOfPairs);
+    this->sort_vec(array, nbOfPairs);
+    // std::cout << "---AFTER VEC----" << std::endl;
+    // this->printf_array(array, nbOfPairs);
+    this->FJS_vec(array, nbOfPairs);
+}
+
+void    PmergeMe::creating_pair_deq(std::deque<unsigned int> _deq)
+{
+    int nbOfPairs = _deq.size() / 2;
+    // mstd::cout << nbOfPairs << std::endl;
+    std::deque<std::deque<unsigned int> >array;
+    // std::vector<std::vector<int>> array
+
+    for (size_t i = 0; i < _deq.size(); i += 2)
+    {
+        std::deque<unsigned int>tmp;
+        // std::cout << "i: " << i << std::endl;
+
+        tmp.push_back(_deq[i]);
+        tmp.push_back(_deq[i + 1]);
+        array.push_back(tmp);
+    }
+    std::cout << "---BEFORE DEQ----" << std::endl;
+    this->printf_array(array, nbOfPairs);
+    this->sort_deq(array, nbOfPairs);
+    // std::cout << "---AFTER DEQM----" << std::endl;
+    // this->printf_array(array, nbOfPairs);
+    this->FJS_deq(array, nbOfPairs);
+}
+
+int PmergeMe::jacobsthal(int n)
+{
+    if (n == 0)
+        return 0;
+    else if (n == 1)
+        return 1;
+    else
+        return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
+}
+
+void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
+{
+    std::cout << "FJS VEC: " << std::endl;
+    this->printf_array(arr, size);
+    std::vector<unsigned int> _sort;
+    std::vector<unsigned int> _pend;
+
+    for (int i = 0; i < size; i++)
+    {
+        _sort.push_back(arr[i][1]);
+        _pend.push_back(arr[i][0]);
+    }
+    arr.clear();
+    std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(size);
+    std::cout << "jacobindicesize: " << jacobsthalIndices.size() << std::endl;
+    for (size_t j = 0; j < jacobsthalIndices.size(); j++)
+    {
+        size_t idx = jacobsthalIndices[j];
+        std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
+        if (idx < _pend.size())
+        {
+            binarySearchInsertion(_sort, _pend[idx]);
+            std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
+        }
+    }
+    // 
+    // for (size_t j = 0; j < _pend.size(); j++)
+    // {
+        // binarySearchInsertion(_sort, _pend[j]);
+    // }
+    if (flagImpair== true)
+        binarySearchInsertion(_sort, this->impair);
+    this->_vector = _sort;
+}
+
+std::vector<unsigned int> PmergeMe::generateJacobsthalIndices(int size)
+{
+    std::vector<unsigned int> indices;
+    for (int i = 0; i < size; i++) {
+        indices.push_back(jacobsthal(i));
+    }
+    std::cout << "indecs: ";
+    print_arr(indices, 4);
+    std::cout << std::endl;
+    return indices;
+}
+
+void	PmergeMe::binarySearchInsertion(std::vector<unsigned int>& main,unsigned int value)
+{
+	std::vector<unsigned int>::iterator start = main.begin();
+	std::vector<unsigned int>::iterator end = main.end();
+	std::vector<unsigned int>::iterator mid;
+	
+	while (start != end)
+	{
+		mid = start + (std::distance(start, end) / 2);
+		if (*mid < value)
+			start = mid + 1;
+		else
+			end = mid;
+	}
+	main.insert(start, value);
+}
+
+void    PmergeMe::FJS_deq(std::deque<std::deque<unsigned int> >&arr, int size)
+{
+    std::cout << "FJS DEQ: " << std::endl;
+    this->printf_array(arr, size);
+    std::deque<unsigned int> _sort;
+    std::deque<unsigned int> _pend;
+
+    for (int i = 0; i < size; i++)
+    {
+        _sort.push_back(arr[i][1]);
+        _pend.push_back(arr[i][0]);
+    }
+    arr.clear();
+    std::cout << "i + 1 sorted: " << std::endl;
+    for (size_t i = 0; i < _sort.size(); i++)
+    {
+        std::cout << _sort.at(i) << std::endl;
+    }
+    std::cout << "i =0 rest: " << std::endl;
+    for (size_t j = 0; j < _pend.size(); j++)
+    {
+        std::cout << _pend.at(j) << std::endl;
+    }
+    if (flagImpair)
+        std::cout << "impair kept: " << this->impair << std::endl;
+}
+
+void    PmergeMe::sort_vec(std::vector<std::vector<unsigned int> >&arr, int size)
+{
+    bool swapped = true;
+    while (swapped)
+    {
+        swapped = false;
+        for (int i = 0; i < size - 1; i++)
+        {
+            if (arr[i][1] > arr[i + 1][1])
+            {
+                std::swap(arr[i][0], arr[i + 1][0]);
+                std::swap(arr[i][1], arr[i + 1][1]);
+                swapped = true;
+            }
+        }
     }
 }
 
-template <typename T>
-void	PmergeMe::fordJohnsonSort(T &arr)
+void    PmergeMe::sort_deq(std::deque<std::deque<unsigned int> >&arr, int size)
 {
-    this->straggler(arr);
-    this->creating_pair(arr);
-
+    bool swapped = true;
+    while (swapped)
+    {
+        swapped = false;
+        for (int i = 0; i < size - 1; i++)
+        {
+            if (arr[i][1] > arr[i + 1][1])
+            {
+                std::swap(arr[i][0], arr[i + 1][0]);
+                std::swap(arr[i][1], arr[i + 1][1]);
+                swapped = true;
+            }
+        }
+    }
 }
 
-// template <typename T>
-// void	PmergeMe::fordJohnsonSort(T &arr)
-// {
-//     int n = arr.size();
-//     bool flag = true;
-    
-//     struct timeval time_start, time_end;
-//     gettimeofday(&time_start, NULL);
-//     // std::clock_t time_start = std::clock(); // Démarre le chronomètre
+void	PmergeMe::launch_vec(std::vector<unsigned int> arr)
+{
+    print_arr(this->_vector, 1);
+    std::cout << " size vect before :" << this->_vector.size() << std::endl;
+    this->straggler(arr);
+    this->creating_pair_vec(arr);
+    print_arr(this->_vector, 2);
+    std::cout << " size vect after :" << this->_vector.size() << std::endl;
+}   
 
-//     while (flag)
-//     {
-//         flag = false;
-//         int p = -1;
-//         for (int i = 0; i < n - 1; ++i)
-//         {
-//             if (arr[i] > arr[i + 1])
-//             {
-//                 p = i;
-//                 break;
-//             }
-//         }
-
-//         if (p != -1)
-//         {
-//             int q = p;
-//             for (int i = p + 1; i < n; ++i)
-//             {
-//                 if (arr[i] < arr[p])
-//                 {
-//                     q = i;
-//                 }
-//             }
-//             std::swap(arr[p], arr[q]); // Échange les éléments aux indices p et q
-//             flag = true;
-//         }
-//     }
-
-//     gettimeofday(&time_end, NULL);
-//     long seconds = time_end.tv_sec - time_start.tv_sec;
-//     long microseconds = time_end.tv_usec - time_start.tv_usec;
-//     this->time = seconds + microseconds * 1e-6;
-//     // std::clock_t time_end = std::clock(); // Arrête le chronomètre
-// //  Calcule le temps écoulé et le convertit en secondes
-//     // this->time = static_cast<double>(time_end - time_start) / CLOCKS_PER_SEC;
-// }
+void	PmergeMe::launch_deq(std::deque<unsigned int> arr)
+{
+    this->straggler(arr);
+    this->creating_pair_deq(arr);
+}
 
 void    PmergeMe::algo()
 {
-    fordJohnsonSort(this->_vector);
-    print_arr(this->_vector, 2);
-    std:: cout << "Time to process a range of " << this->_deque.size() << " elements with std::vector : " << this->time << " us" << std::endl;
-    fordJohnsonSort(this->_deque);
-    std:: cout << "Time to process a range of " << this->_vector.size() << " elements with std::deque : " << this->time << " us" << std::endl;
+    launch_vec(this->_vector);
+    // std:: cout << "Time to process a range of " << this->_deque.size() << " elements with std::vector : " << this->time << " us" << std::endl;
+    // launch_deq(this->_deque);
+    // std:: cout << "Time to process a range of " << this->_vector.size() << " elements with std::deque : " << this->time << " us" << std::endl;
 }
 
 void    PmergeMe::parse(int ac , char **av)
@@ -178,7 +320,6 @@ void    PmergeMe::parse(int ac , char **av)
     {
         for (int i = 1; i < ac; i++)
         {
-            // std::cout << av[i] << std::endl;
             if (verif_digit(av[i]) == 0)
                 throw PmergeMe::PmergeMe_exceptions("Error: Bad Input");
             int j = verif_ui(av[i]);
