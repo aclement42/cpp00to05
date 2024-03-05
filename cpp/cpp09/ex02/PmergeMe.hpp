@@ -25,6 +25,7 @@ class   PmergeMe
         PmergeMe();
         ~PmergeMe();
 
+void    printf_jcs(std::vector<unsigned int> jcs);
 
         void    parse(int ac, char **av);
         bool    verif_digit(std::string const & str);

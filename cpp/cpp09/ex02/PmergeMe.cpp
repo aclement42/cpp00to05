@@ -163,6 +163,27 @@ int PmergeMe::jacobsthal(int n)
         return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
 }
 
+void    PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
+{
+    int i = 1;
+    int jcb_idx = 3;
+    int jacob_value = jcs[jcb_idx];
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    i++;
+    jcb_idx++;
+    jacob_value = jcs[jcb_idx];
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    i += i;
+    jcb_idx++;
+    jacob_value = jcs[jcb_idx];
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    i += i;
+    jcb_idx++;
+    jacob_value = jcs[jcb_idx];
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+
+}
+
 void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 {
     std::cout << "FJS VEC: " << std::endl;
@@ -179,32 +200,38 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
     }
     arr.clear();
     std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(size);
+    printf_jcs(jacobsthalIndices);
     std::cout << "jacobindicesize: " << jacobsthalIndices.size() << std::endl;
-    // for (size_t j = 0; j < jacobsthalIndices.size(); j++)
-    // {
+    for (size_t j = 0; j < jacobsthalIndices.size() - 1; j++)
+    {
+        size_t idx = jacobsthalIndices[j];
+        std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
+        if (idx < _pend.size())
+        {
+            binarySearchInsertion(_sort, _pend[idx]);
+            std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
+        }
+    }
+// tri verif indice recup
+    // std::cout << "Indices: ";
+    // for (size_t i = 0; i < jacobsthalIndices.size(); ++i) {
+        // std::cout << jacobsthalIndices[i] << " ";
+    // }
+    // std::cout << std::endl;
+    // for (size_t j = 0; j < jacobsthalIndices.size(); j++) {
         // size_t idx = jacobsthalIndices[j];
-        // std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
-        // if (idx < _pend.size())
-        // {
+    // std::cout << "la" << std::endl;
+        // if (!inserted[idx]) { // Vérifiez si l'élément a déjà été inséré
             // binarySearchInsertion(_sort, _pend[idx]);
-            // std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
+            // inserted[idx] = true;
         // }
     // }
-// tri verif indice recup
-    for (size_t j = 0; j < jacobsthalIndices.size(); j++) {
-        size_t idx = jacobsthalIndices[j];
-    std::cout << "la" << std::endl;
-        if (!inserted[idx]) { // Vérifiez si l'élément a déjà été inséré
-            binarySearchInsertion(_sort, _pend[idx]);
-            inserted[idx] = true;
-        }
-    }
    // Insérer tout élément restant de _pend qui n'a pas été inséré en raison de doublons dans les indices
-    for (size_t i = 0; i < inserted.size(); ++i) {
-        if (!inserted[i]) {
-            binarySearchInsertion(_sort, _pend[i]);
-        }
-    }
+    // for (size_t i = 0; i < inserted.size(); ++i) {
+        // if (!inserted[i]) {
+            // binarySearchInsertion(_sort, _pend[i]);
+        // }
+    // }
     // classic tri fonctionne seul:
     // for (size_t j = 0; j < _pend.size(); j++)
     // {
@@ -220,7 +247,7 @@ std::vector<unsigned int> PmergeMe::generateJacobsthalIndices(int size)
 
     std::vector<unsigned int> indices;
     for (int i = 0; i < size; ++i) {
-        unsigned int idx = jacobsthal(i) % size; // Assurez-vous que l'indice est dans la plage
+        unsigned int idx = jacobsthal(i);// % size; // Assure que l'indice est dans la plage
         indices.push_back(idx);
     }
 
@@ -236,11 +263,11 @@ std::vector<unsigned int> PmergeMe::generateJacobsthalIndices(int size)
         // }
     // }
 
-    // std::cout << "Indices: ";
-    // for (size_t i = 0; i < indices.size(); ++i) {
-        // std::cout << indices[i] << " ";
-    // }
-    // std::cout << std::endl;
+    std::cout << "Indices: ";
+    for (size_t i = 0; i < indices.size(); ++i) {
+        std::cout << indices[i] << " ";
+    }
+    std::cout << std::endl;
     return indices;
 
 
@@ -384,7 +411,7 @@ void    PmergeMe::parse(int ac , char **av)
                 return ;
             }
         }
-        print_arr(this->_deque, 1);
+        // print_arr(this->_deque, 1);
         algo();
     }
     catch(std::exception& e)
