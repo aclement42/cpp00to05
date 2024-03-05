@@ -47,7 +47,7 @@ int    PmergeMe::verif_ui(std::string const & str)
     unsigned long long ulVal = strtoul(cstr, &end, 10);
 
     // std::cout << "Unsigned long long :" << ulVal << std::endl;
-    if (ulVal < 0 || ulVal > 4294967295)
+    if (ulVal < 0 || ulVal > 2147483647)
         return (0);
     unsigned int uVal = static_cast<unsigned int>(ulVal);
     // std::cout << "Unsigned :" << uVal << std::endl;
@@ -166,9 +166,11 @@ int PmergeMe::jacobsthal(int n)
 void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 {
     std::cout << "FJS VEC: " << std::endl;
-    this->printf_array(arr, size);
+    // this->printf_array(arr, size);
     std::vector<unsigned int> _sort;
     std::vector<unsigned int> _pend;
+
+    std::vector<bool> inserted(size, false);
 
     for (int i = 0; i < size; i++)
     {
@@ -178,17 +180,32 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
     arr.clear();
     std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(size);
     std::cout << "jacobindicesize: " << jacobsthalIndices.size() << std::endl;
-    for (size_t j = 0; j < jacobsthalIndices.size(); j++)
-    {
+    // for (size_t j = 0; j < jacobsthalIndices.size(); j++)
+    // {
+        // size_t idx = jacobsthalIndices[j];
+        // std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
+        // if (idx < _pend.size())
+        // {
+            // binarySearchInsertion(_sort, _pend[idx]);
+            // std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
+        // }
+    // }
+// tri verif indice recup
+    for (size_t j = 0; j < jacobsthalIndices.size(); j++) {
         size_t idx = jacobsthalIndices[j];
-        std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
-        if (idx < _pend.size())
-        {
+    std::cout << "la" << std::endl;
+        if (!inserted[idx]) { // Vérifiez si l'élément a déjà été inséré
             binarySearchInsertion(_sort, _pend[idx]);
-            std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
+            inserted[idx] = true;
         }
     }
-    // 
+   // Insérer tout élément restant de _pend qui n'a pas été inséré en raison de doublons dans les indices
+    for (size_t i = 0; i < inserted.size(); ++i) {
+        if (!inserted[i]) {
+            binarySearchInsertion(_sort, _pend[i]);
+        }
+    }
+    // classic tri fonctionne seul:
     // for (size_t j = 0; j < _pend.size(); j++)
     // {
         // binarySearchInsertion(_sort, _pend[j]);
@@ -200,14 +217,51 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 
 std::vector<unsigned int> PmergeMe::generateJacobsthalIndices(int size)
 {
+
     std::vector<unsigned int> indices;
-    for (int i = 0; i < size; i++) {
-        indices.push_back(jacobsthal(i));
+    for (int i = 0; i < size; ++i) {
+        unsigned int idx = jacobsthal(i) % size; // Assurez-vous que l'indice est dans la plage
+        indices.push_back(idx);
     }
-    std::cout << "indecs: ";
-    print_arr(indices, 4);
-    std::cout << std::endl;
+
+    // std::vector<unsigned int> tempIndices;
+    // std::vector<unsigned int> indices;
+    // std::set<unsigned int> seenIndices;
+
+   //Générer les nombres de Jacobsthal et les ajouter à tempIndices
+    // for (int i = 0; i < size; ++i) {
+        // unsigned int idx = jacobsthal(i) % size; // S'assurer que l'indice est dans la plage
+        // if (seenIndices.insert(idx).second) { // Insérer dans set pour vérifier la nouveauté
+            // indices.push_back(idx); // Ajouter à indices si nouveau
+        // }
+    // }
+
+    // std::cout << "Indices: ";
+    // for (size_t i = 0; i < indices.size(); ++i) {
+        // std::cout << indices[i] << " ";
+    // }
+    // std::cout << std::endl;
     return indices;
+
+
+    // std::vector<unsigned int> indices;
+    // if (this->_vector.size() < 6)
+    // {
+        // for (int i = 0; i < size; i++)
+        // {
+            // indices.push_back(jacobsthal(i));
+        // }
+    // }
+    // else
+    // {
+        // for (int i = 0; i <= size; ++i)
+            // indices.push_back(jacobsthal(i));
+// 
+    // }
+    // std::cout << "indecs: ";
+    // print_arr(indices, 4);
+    // std::cout << std::endl;
+    // return indices;
 }
 
 void	PmergeMe::binarySearchInsertion(std::vector<unsigned int>& main,unsigned int value)
