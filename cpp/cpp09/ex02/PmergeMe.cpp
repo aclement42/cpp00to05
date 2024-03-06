@@ -175,7 +175,7 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     seq.push_back(i);
     seq.push_back(jacob_value);
 
-    // std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
 
     int lastJacobValue = jacob_value;
     while (i < lastJacobValue - 1)
@@ -186,7 +186,76 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     jacob_value = jcs[jcb_idx];
     seq.push_back(i);
     seq.push_back(jacob_value);
-    // std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+    
+    lastJacobValue = jacob_value;
+    while (i < lastJacobValue - 1)
+    {
+        i++;
+    }
+    jcb_idx++;
+    jacob_value = jcs[jcb_idx];
+    seq.push_back(i);
+    seq.push_back(jacob_value);
+
+    lastJacobValue = jacob_value;
+    std::vector<int>::iterator it;
+    while (jcb_idx < (int)jcs.size() - 1)
+    {
+        // std::cout << " jcb_idx:" << jcb_idx << std::endl;
+        while (i < lastJacobValue - 1)
+        {
+            // std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+            it = std::find(seq.begin(), seq.end(), i);
+            if (it == seq.end())
+            {
+                seq.push_back(i);
+                jcb_idx++;
+                jacob_value = jcs[jcb_idx];
+                seq.push_back(jacob_value);
+                lastJacobValue = jacob_value;
+                break ;
+            }
+            else
+                i++;
+        }
+    }
+    while (i < lastJacobValue - 1)
+    {
+        it = std::find(seq.begin(), seq.end(), i);
+        if (it == seq.end())
+            seq.push_back(i);
+        else
+            i++;
+    }
+    // PmergeMe::print_arr(seq, 1);
+    return (seq);
+}
+
+/*
+std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
+{
+    std::vector<int> seq;
+
+    int i = 1;
+    
+    int jcb_idx = 3;
+    int jacob_value = jcs[jcb_idx];
+    seq.push_back(i);
+    seq.push_back(jacob_value);
+
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
+
+    int lastJacobValue = jacob_value;
+    while (i < lastJacobValue - 1)
+    {
+        i++;
+    }
+    jcb_idx++;
+    jacob_value = jcs[jcb_idx];
+    seq.push_back(i);
+    seq.push_back(jacob_value);
+    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
     
     lastJacobValue = jacob_value;
     while (i < lastJacobValue - 1)
@@ -256,7 +325,7 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     PmergeMe::print_arr(seq, 1);
     return (seq);
 }
-
+*/
 void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 {
     // std::cout << "FJS VEC: " << std::endl;
@@ -479,12 +548,18 @@ void    PmergeMe::sort_deq(std::deque<std::deque<unsigned int> >&arr, int size)
 
 void	PmergeMe::launch_vec(std::vector<unsigned int> arr)
 {
+    struct timeval d_time_start, d_time_end;
+    gettimeofday(&d_time_start, NULL);
     print_arr(this->_vector, 1);
     std::cout << " size vect before :" << this->_vector.size() << std::endl;
     this->straggler(arr);
     this->creating_pair_vec(arr);
     print_arr(this->_vector, 2);
     std::cout << " size vect after :" << this->_vector.size() << std::endl;
+    gettimeofday(&d_time_end, NULL);
+	long seconds = d_time_end.tv_sec - d_time_start.tv_sec;
+    long microseconds = d_time_end.tv_usec - d_time_start.tv_usec;
+    this->_time = seconds + microseconds * 1e-6;
 }   
 
 void	PmergeMe::launch_deq(std::deque<unsigned int> arr)
@@ -496,7 +571,7 @@ void	PmergeMe::launch_deq(std::deque<unsigned int> arr)
 void    PmergeMe::algo()
 {
     launch_vec(this->_vector);
-    // std:: cout << "Time to process a range of " << this->_deque.size() << " elements with std::vector : " << this->time << " us" << std::endl;
+    std:: cout << "Time to process a range of " << this->_vector.size() << " elements with std::vector : " << this->_time << " us" << std::endl;
     // launch_deq(this->_deque);
     // std:: cout << "Time to process a range of " << this->_vector.size() << " elements with std::deque : " << this->time << " us" << std::endl;
 }

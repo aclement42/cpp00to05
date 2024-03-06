@@ -20,7 +20,7 @@ class   PmergeMe
         unsigned int    impair;
 		// timeval time_start;
 		// timeval time_end;
-		// double time;
+		double _time;
     public:
         PmergeMe();
         ~PmergeMe();
