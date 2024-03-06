@@ -70,7 +70,6 @@ int    PmergeMe::verif_ui(std::string const & str)
 template <typename T>
 void    PmergeMe::print_arr(T &arr, int i)
 {
-    // std::cout << "size: " << arr.size() << std::endl;
     if (i == 1)
         std::cout << "Before: ";
     else if (i == 2)
@@ -162,6 +161,7 @@ int PmergeMe::jacobsthal(int n)
     else
         return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
 }
+
 // i J   i J   i J    i J 
 // 1 3 | 2 5 | 4 11 | 6 21
 std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
@@ -175,8 +175,6 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     seq.push_back(i);
     seq.push_back(jacob_value);
 
-    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
-
     int lastJacobValue = jacob_value;
     while (i < lastJacobValue - 1)
     {
@@ -186,7 +184,6 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     jacob_value = jcs[jcb_idx];
     seq.push_back(i);
     seq.push_back(jacob_value);
-    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
     
     lastJacobValue = jacob_value;
     while (i < lastJacobValue - 1)
@@ -202,10 +199,8 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     std::vector<int>::iterator it;
     while (jcb_idx < (int)jcs.size() - 1)
     {
-        // std::cout << " jcb_idx:" << jcb_idx << std::endl;
         while (i < lastJacobValue - 1)
         {
-            // std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
             it = std::find(seq.begin(), seq.end(), i);
             if (it == seq.end())
             {
@@ -232,104 +227,8 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
     return (seq);
 }
 
-/*
-std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
-{
-    std::vector<int> seq;
-
-    int i = 1;
-    
-    int jcb_idx = 3;
-    int jacob_value = jcs[jcb_idx];
-    seq.push_back(i);
-    seq.push_back(jacob_value);
-
-    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
-
-    int lastJacobValue = jacob_value;
-    while (i < lastJacobValue - 1)
-    {
-        i++;
-    }
-    jcb_idx++;
-    jacob_value = jcs[jcb_idx];
-    seq.push_back(i);
-    seq.push_back(jacob_value);
-    std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
-    
-    lastJacobValue = jacob_value;
-    while (i < lastJacobValue - 1)
-    {
-      
-        i++;
-    }
-    jcb_idx++;
-    jacob_value = jcs[jcb_idx];
-    seq.push_back(i);
-    seq.push_back(jacob_value);
-    // std::cout << "i: " << i << ", jcb_value:" << jacob_value << std::endl;
-
-    lastJacobValue = jacob_value;
-    std::vector<int>::iterator it;
-    while (i < lastJacobValue - 1)
-    {
-        it = std::find(seq.begin(), seq.end(), i);
-        if (it == seq.end())
-            break ;
-        else
-            i++;
-    }
-    seq.push_back(i);
-    jcb_idx++;
-    jacob_value = jcs[jcb_idx];
-    seq.push_back(jacob_value);
-
-    lastJacobValue = jacob_value;
-    while (i < lastJacobValue - 1)
-    {
-        it = std::find(seq.begin(), seq.end(), i);
-        if (it == seq.end())
-            break ;
-        else
-            i++;
-    }
-    seq.push_back(i);
-    jcb_idx++;
-    jacob_value = jcs[jcb_idx];
-    seq.push_back(jacob_value);
-
-    lastJacobValue = jacob_value;
-    while (i < lastJacobValue - 1)
-    {
-        it = std::find(seq.begin(), seq.end(), i);
-        if (it == seq.end())
-            break ;
-        else
-            i++;
-    }
-    seq.push_back(i);
-    jcb_idx++;
-    jacob_value = jcs[jcb_idx];
-    seq.push_back(jacob_value);
-
-    lastJacobValue = jacob_value;
-    while (i < lastJacobValue - 1)
-    {
-        it = std::find(seq.begin(), seq.end(), i);
-        if (it == seq.end())
-            seq.push_back(i);
-        else
-            i++;
-    }
-
-    PmergeMe::print_arr(seq, 1);
-    return (seq);
-}
-*/
 void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 {
-    // std::cout << "FJS VEC: " << std::endl;
-    // this->printf_array(arr, size);
     std::vector<unsigned int> _sort;
     std::vector<unsigned int> _pend;
 
@@ -340,53 +239,18 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
         _sort.push_back(arr[i][1]);
         _pend.push_back(arr[i][0]);
     }
-    // print_arr(_sort, 1);
-    // print_arr(_pend, 2);
     arr.clear();
-    std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(static_cast<int>(_pend.size()));
-    std::vector<int> insertSeq = printf_jcs(jacobsthalIndices);
-
-    (void) insertSeq;
-    // std::cout << "jacobindicesize: " << jacobsthalIndices.size() << std::endl;
-    // for (size_t j = 0; j < jacobsthalIndices.size() - 1; j++)
-    // {
-    //     size_t idx = jacobsthalIndices[j];
-    //     std::cout << "jacobindice[i] = idx:  " << idx << std::endl;
-    //     if (idx < _pend.size())
-    //     {
-    //         binarySearchInsertion(_sort, _pend[idx]);
-    //         std::cout << "pend[idx] dans sort:  " << _pend[idx] << std::endl;
-    //     }
-    // }
-// tri verif indice recup
-    // std::cout << "Indices: ";
-    // for (size_t i = 0; i < jacobsthalIndices.size(); ++i) {
-        // std::cout << jacobsthalIndices[i] << " ";
-    // }
-    // std::cout << std::endl;
-    // for (size_t j = 0; j < jacobsthalIndices.size(); j++) {
-        // size_t idx = jacobsthalIndices[j];
-    // std::cout << "la" << std::endl;
-        // if (!inserted[idx]) { // Vérifiez si l'élément a déjà été inséré
-            // binarySearchInsertion(_sort, _pend[idx]);
-            // inserted[idx] = true;
-        // }
-    // }
-   // Insérer tout élément restant de _pend qui n'a pas été inséré en raison de doublons dans les indices
-    // for (size_t i = 0; i < inserted.size(); ++i) {
-        // if (!inserted[i]) {
-            // binarySearchInsertion(_sort, _pend[i]);
-        // }
-    // }
-    // classic tri fonctionne seul:
-    if (this->_vector.size() < 4)
+    if (this->_vector.size() < 6)
     {
-        std::cout << "2 ou 3" << std::endl;
         for (size_t j = 0; j < _pend.size(); j++)
             binarySearchInsertion(_sort, _pend[j]);
     }
     else
     {
+        std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(static_cast<int>(_pend.size()));
+        std::vector<int> insertSeq = printf_jcs(jacobsthalIndices);
+
+        (void) insertSeq;
         _sort.insert(_sort.begin(), _pend[0]);
         for (size_t j = 0; j < _pend.size() + 1; j++)
         {
