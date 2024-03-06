@@ -121,8 +121,8 @@ void    PmergeMe::creating_pair_vec(std::vector<unsigned int> _vec)
         tmp.push_back(_vec[i + 1]);
         array.push_back(tmp);
     }
-    std::cout << "---BEFORE VEC----" << std::endl;
-    this->printf_array(array, nbOfPairs);
+    // std::cout << "---BEFORE VEC----" << std::endl;
+    // this->printf_array(array, nbOfPairs);
     this->sort_vec(array, nbOfPairs);
     // std::cout << "---AFTER VEC----" << std::endl;
     // this->printf_array(array, nbOfPairs);
@@ -259,7 +259,7 @@ std::vector<int>  PmergeMe::printf_jcs(std::vector<unsigned int> jcs)
 
 void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
 {
-    std::cout << "FJS VEC: " << std::endl;
+    // std::cout << "FJS VEC: " << std::endl;
     // this->printf_array(arr, size);
     std::vector<unsigned int> _sort;
     std::vector<unsigned int> _pend;
@@ -271,8 +271,8 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
         _sort.push_back(arr[i][1]);
         _pend.push_back(arr[i][0]);
     }
-    print_arr(_sort, 1);
-    print_arr(_pend, 2);
+    // print_arr(_sort, 1);
+    // print_arr(_pend, 2);
     arr.clear();
     std::vector<unsigned int> jacobsthalIndices = generateJacobsthalIndices(static_cast<int>(_pend.size()));
     std::vector<int> insertSeq = printf_jcs(jacobsthalIndices);
@@ -310,12 +310,22 @@ void    PmergeMe::FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size)
         // }
     // }
     // classic tri fonctionne seul:
-    _sort.insert(_sort.begin(), _pend[0]);
-    for (size_t j = 0; j < _pend.size() + 1; j++)
+    if (this->_vector.size() < 4)
     {
-        size_t idx = insertSeq[j];
-        if (idx < _pend.size())
-            binarySearchInsertion(_sort, _pend[idx]);
+        std::cout << "2 ou 3" << std::endl;
+        for (size_t j = 0; j < _pend.size(); j++)
+            binarySearchInsertion(_sort, _pend[j]);
+    }
+    else
+    {
+        _sort.insert(_sort.begin(), _pend[0]);
+        for (size_t j = 0; j < _pend.size() + 1; j++)
+        {
+            size_t idx = insertSeq[j];
+            if (idx < _pend.size())
+                binarySearchInsertion(_sort, _pend[idx]);
+        }
+
     }
     if (flagImpair== true)
         binarySearchInsertion(_sort, this->impair);
