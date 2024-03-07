@@ -68,7 +68,7 @@ void    convertdouble(std::string type)
    //     nb == (-1 * std::numeric_limits<double>::infinity()))
    //     std::cout << "float: inff" << std::endl;
    // else
-   std::cout << "Debug convert doubble" << std::endl;
+//    std::cout << "Debug convert doubble" << std::endl;
     std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << static_cast<float>(nb) << "f" << std::endl;
     std::cout << "double:\t" << std::fixed  << std::setprecision(keeprecision(type)) << std::scientific << static_cast<double>(nb) << std::endl;
     
@@ -76,13 +76,17 @@ void    convertdouble(std::string type)
 
 void    convertfloat(std::string type)
 {
-    // std::cout << "is a float" << std::endl;
+    std::cout << "is a float" << std::endl;
+    std::cout << "type: " << type << std::endl;
     std::stringstream ss(type);
-    long double   nb;
-    ss >> nb;
-    long int fInt    = static_cast<long int>(nb);
     
-    // std::cout << fInt << std::endl;
+        std::cout << "fail: " << ss.fail() << std::endl;
+    float   nb;
+    ss >> nb;
+    std::cout << "nb: " << nb << std::endl;
+    long int fInt    = static_cast<int>(nb);
+    
+    std::cout << fInt << std::endl;
     if ((nb >= 0 && nb < 32 )|| nb == 127)
         std::cout << "char: Non displayable" << std::endl;
     else if (nb < 0 || nb > 127)

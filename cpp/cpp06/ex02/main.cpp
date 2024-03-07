@@ -22,3 +22,8 @@ int main()
     delete (tmp4);
     return (0);
 }
+
+// C Type was generate
+// A Type was generate
+// B Type was generate
+// C Type was generate

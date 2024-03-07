@@ -12,10 +12,12 @@ int main()
 
 	AForm*		rrf;
 
+	std::cout << "coucou:" << std::endl;
 	rrf = test.makeForm("coucou", "bender");
-
+	std::cout << "robotomy:" << std::endl;
 	rrf = test.makeForm("robotomy request", "Bender");
 	delete (rrf);
+	std::cout << "shruberry:" << std::endl;
 	rrf = test.makeForm("shrubbery creation", "Bender");
 	fabrice.executeAForm(*rrf);
 	fabrice.signAForm(*rrf);

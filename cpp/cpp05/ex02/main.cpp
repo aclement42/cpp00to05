@@ -49,6 +49,7 @@ int main()
 		Alvin.executeAForm(robot);
 		Alvin.executeAForm(robot);
 		Alvin.executeAForm(robot);
+		Alvin.executeAForm(robot);
 	}
 	catch(const std::exception& e)
 	{
