@@ -6,6 +6,17 @@ RPN::RPN()
 RPN::~RPN()
 {}
 
+RPN::RPN(RPN const &src)
+{
+    (void)src;
+}
+		
+RPN &RPN::operator=(RPN const & rhs)
+{
+    (void)rhs;
+	return *this;
+}
+
 
 RPN::RPN_exceptions::RPN_exceptions(std::string const & str)
 {
@@ -58,7 +69,7 @@ void RPN::verify_space_position(std::string const & str)
 
 bool RPN::case_operator(double  a,double  b, char ope)
 {
-    std::cout << "a :" << a << "et b: " << b << std::endl; 
+    // std::cout << "a :" << a << "et b: " << b << std::endl; 
     if (ope == '+')
         _stack.push(a + b);
     else if (ope == '-')
@@ -69,12 +80,10 @@ bool RPN::case_operator(double  a,double  b, char ope)
     {
         if (b == 0)
             return (0);
-            //throw RPN::RPN_exceptions("Error: Cannot divide X by 0");
         _stack.push(a / b);
     }
     else 
         return (0);
-        //throw RPN::RPN_exceptions("Error: Operator gone wrong");
     return (1);
 }
 

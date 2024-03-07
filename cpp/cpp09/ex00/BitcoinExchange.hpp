@@ -14,6 +14,8 @@ class BitcoinExchange
         std::map<std::string, double> _data; // Conteneur pour stocker les dates et leurs valeurs
         std::string date_to_find;
         std::string value_to_multi;
+        BitcoinExchange(BitcoinExchange const &src);
+		BitcoinExchange &operator=(BitcoinExchange const & rhs);
     public:
         BitcoinExchange();
         ~BitcoinExchange();

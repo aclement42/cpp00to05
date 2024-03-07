@@ -6,6 +6,16 @@ BitcoinExchange::BitcoinExchange()
 BitcoinExchange::~BitcoinExchange()
 {}
 
+BitcoinExchange::BitcoinExchange(BitcoinExchange const &src)
+{
+    (void)src;
+}
+
+BitcoinExchange & BitcoinExchange::operator=(BitcoinExchange const & rhs)
+{
+    (void)rhs;
+    return (*this);
+}
 
 BitcoinExchange::BitcoinExceptions::BitcoinExceptions(std::string const & str)
 {
@@ -41,8 +51,6 @@ bool BitcoinExchange::IsDigit(std::string date, int y, int pos)
 
 bool BitcoinExchange::check_year(std::string date)
 {
-    // std::cout << "CHECK YEAR" << std::endl;
-
     if (IsDigit(date, 4, 0) == 0)
         return (0);
     std::string year;
@@ -53,14 +61,11 @@ bool BitcoinExchange::check_year(std::string date)
     int int_year = atoi(year.c_str());
     if (int_year < 2009) // || int_year > 2022)
         return (0);
-    // std::cout << "year:" << year << std::endl;
     return (1);
 }
 
 bool BitcoinExchange::check_month(std::string date, int pos)
 {
-    // std::cout << "CHECK MONTH" << std::endl;
-
     if (IsDigit(date, 2, pos) == 0)
         return (0);
     std::string month;
@@ -73,7 +78,6 @@ bool BitcoinExchange::check_month(std::string date, int pos)
     int int_month = atoi(month.c_str());
     if (int_month < 01 || int_month > 12)
         return (0);
-    // std::cout << "month:" << month << std::endl;
     return (1);
 }
 
@@ -81,7 +85,6 @@ bool BitcoinExchange::check_month(std::string date, int pos)
 
 bool BitcoinExchange::check_tilde_space(std::string date, int i, char c)
 {
-    // std::cout << "CHECK TILDE SPACE:" << date[i] << std::endl;
     if (date[i] == c)
         return (1);
     else
@@ -90,8 +93,6 @@ bool BitcoinExchange::check_tilde_space(std::string date, int i, char c)
 
 bool BitcoinExchange::check_day(std::string date, int pos)
 {
-    // std::cout << "CHECK DAY" << std::endl;
-
     if (IsDigit(date, 2, pos) == 0)
         return (0);
     std::string day;
@@ -104,7 +105,6 @@ bool BitcoinExchange::check_day(std::string date, int pos)
     int int_day = atoi(day.c_str());
     if (int_day < 01 || int_day > 31)
         return (0);
-    // std::cout << "day:" << day << std::endl;
     return (1);
 }
 
@@ -136,17 +136,13 @@ std::string BitcoinExchange::keep_value(std::string line, int pos)
         value +=line[pos];
         pos++;
     }
-    // std::cout << "val:" << value << std::endl;
     return (value);
 }
 
 bool BitcoinExchange::check_line(std::string line)
 {
-    // std::cout << "line:" << line << "$" << line.length() << std::endl;
     std::string date = check_separator(line);
-    // std::cout << "date:" << date << "$" << std::endl;
     std::string value = keep_value(line, 13);
-    // std::cout << "value: \'" << value << "\'" << std::endl;
     try
     {
         if (date == "NULL")
@@ -191,12 +187,8 @@ void    BitcoinExchange::recup_line_and_launch(std::string line)
 {
     this->date_to_find = line.substr(0, 10);
     this->value_to_multi = keep_value(line, 13);
-    // std::cout << "str value:" << value_to_multi << std::endl;
-    // std::cout << line << std::endl;
-    // std::cout << this->date_to_find  << "." << std::endl;
     char* endPtr;
     double value = strtod(value_to_multi.c_str(), &endPtr);
-    // std::cout << "double value:" << value << std::endl;
     std::map<std::string, double>::iterator it = _data.find(date_to_find);
     if(it == _data.end()) // 
     {
@@ -273,15 +265,8 @@ void BitcoinExchange::getdate(const std::string& filename)
                 _data.insert(std::make_pair(date_str, value));
             }
         }
-        // printdata();
         file.close();
     }
-
-// void BitcoinExchange::printdata() const {
-        // for (std::map<std::string, double>::const_iterator it = _data.begin(); it != _data.end(); ++it) {
-            // std::cout << "Date: " << it->first << ", Valeur: " << it->second << std::endl;
-        // }
-    // }
 
 void    BitcoinExchange::verif_extension(std::string str)
 {

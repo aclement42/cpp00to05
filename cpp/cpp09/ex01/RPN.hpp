@@ -9,6 +9,8 @@ class  RPN
 {
     private:
         std::stack<double> _stack;
+        RPN(RPN const &src);
+		RPN &operator=(RPN const & rhs);
     public:
         RPN();
         ~RPN();

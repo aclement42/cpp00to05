@@ -6,6 +6,16 @@ PmergeMe::PmergeMe() : flagImpair(0), impair(0)
 PmergeMe::~PmergeMe()
 {}
 
+PmergeMe::PmergeMe(PmergeMe &obj)
+{
+    (void)obj;
+}
+
+PmergeMe & PmergeMe::operator=(PmergeMe const &rhs)
+{
+    (void)rhs;
+    return (*this);
+}
 
 PmergeMe::PmergeMe_exceptions::PmergeMe_exceptions(std::string const & str)
 {

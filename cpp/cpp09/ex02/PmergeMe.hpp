@@ -18,9 +18,9 @@ class   PmergeMe
         std::deque<unsigned int> _deque;
         bool            flagImpair;
         unsigned int    impair;
-		// timeval time_start;
-		// timeval time_end;
 		double _time;
+        PmergeMe(PmergeMe &obj);
+        PmergeMe & operator=(PmergeMe const &rhs);
     public:
         PmergeMe();
         ~PmergeMe();
@@ -29,23 +29,26 @@ class   PmergeMe
         void    parse(int ac, char **av);
         bool    verif_digit(std::string const & str);
         int    verif_ui(std::string const & str);
+        
         template<typename T>
         void    print_arr(T &arr, int i);
+        
         void    algo();
         void    launch_vec(std::vector<unsigned int> vec);
         void    launch_deq(std::deque<unsigned int> deq);
 
         void    FJS_vec(std::vector<std::vector<unsigned int> >&arr, int size);
         void    FJS_deq(std::deque<std::deque<unsigned int> >&arr, int size);
+        
         template<typename T>
         void    straggler(T &arr);
+        
         void    creating_pair_vec(std::vector<unsigned int> _vec);
         void    creating_pair_deq(std::deque<unsigned int> _deq);
 
         void    sort_vec(std::vector<std::vector<unsigned int> >&arr, int size);
         void    sort_deq(std::deque<std::deque<unsigned int> >&arr, int size);
         
-        // template <typename T>
         void	binarySearchInsertion(std::vector<unsigned int>& main,unsigned int value);
         void	binarySearchInsertion_deq(std::deque<unsigned int>& main,unsigned int value);
 
@@ -59,9 +62,6 @@ class   PmergeMe
         
         template<typename T>
         void    printf_array(T &array, int nbofpairs);
-
-        // bool    verify_str(std::string const & str);
-        // bool    verify_spaces(std::string const & str);
 
 
         class PmergeMe_exceptions : public std::exception
