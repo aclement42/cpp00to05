@@ -131,14 +131,11 @@ void    PmergeMe::creating_pair_vec(std::vector<unsigned int> _vec)
 void    PmergeMe::creating_pair_deq(std::deque<unsigned int> _deq)
 {
     int nbOfPairs = _deq.size() / 2;
-    // mstd::cout << nbOfPairs << std::endl;
     std::deque<std::deque<unsigned int> >array;
-    // std::vector<std::vector<int>> array
 
     for (size_t i = 0; i < _deq.size(); i += 2)
     {
         std::deque<unsigned int>tmp;
-        // std::cout << "i: " << i << std::endl;
 
         if (_deq[i] > _deq[i + 1])
             std::swap(_deq[i], _deq[i + 1]);
@@ -146,11 +143,7 @@ void    PmergeMe::creating_pair_deq(std::deque<unsigned int> _deq)
         tmp.push_back(_deq[i + 1]);
         array.push_back(tmp);
     }
-    // std::cout << "---BEFORE VEC----" << std::endl;
-    // this->printf_array(array, nbOfPairs);
     this->sort_deq(array, nbOfPairs);
-    // std::cout << "---AFTER VEC----" << std::endl;
-    // this->printf_array(array, nbOfPairs);
     this->FJS_deq(array, nbOfPairs);
 }
 
@@ -288,7 +281,6 @@ std::deque<int>  PmergeMe::printf_jcsd(std::deque<unsigned int> jcs)
         else
             i++;
     }
-    // PmergeMe::print_arr(seq, 1);
     return (seq);
 }
 
@@ -366,25 +358,19 @@ std::deque<unsigned int> PmergeMe::generateJacobsthalIndicesdeq(int size)
     int i = 0;
     while (true)
     {
-        int idx = jacobsthal(i);// % size; // Assure que l'indice est dans la plage
+        int idx = jacobsthal(i);
         if (idx < size)
             indices.push_back(idx);
         else
         {
             indices.push_back(idx);
             i++;
-            idx = jacobsthal(i);// % size; // Assure que l'indice est dans la plage
+            idx = jacobsthal(i);
             indices.push_back(idx);
             break ;
         }
         i++;
     }
-
-    // std::cout << "Indices: ";
-    // for (size_t i = 0; i < indices.size(); ++i) {
-        // std::cout << indices[i] << " ";
-    // }
-    // std::cout << std::endl;
     return indices;
 }
 
@@ -560,7 +546,6 @@ void    PmergeMe::parse(int ac , char **av)
                 return ;
             }
         }
-        // print_arr(this->_deque, 1);
         algo();
     }
     catch(std::exception& e)
