@@ -25,7 +25,6 @@ class   PmergeMe
         PmergeMe();
         ~PmergeMe();
 
-std::vector<int>    printf_jcs(std::vector<unsigned int> jcs);
 
         void    parse(int ac, char **av);
         bool    verif_digit(std::string const & str);
@@ -48,9 +47,14 @@ std::vector<int>    printf_jcs(std::vector<unsigned int> jcs);
         
         // template <typename T>
         void	binarySearchInsertion(std::vector<unsigned int>& main,unsigned int value);
+        void	binarySearchInsertion_deq(std::deque<unsigned int>& main,unsigned int value);
+
         int     jacobsthal(int n);
         std::vector<unsigned int> generateJacobsthalIndices(int size);
+        std::deque<unsigned int> generateJacobsthalIndicesdeq(int size);
 
+        std::vector<int>    printf_jcsv(std::vector<unsigned int> jcs);
+        std::deque<int>  printf_jcsd(std::deque<unsigned int> jcs);
 
         
         template<typename T>
