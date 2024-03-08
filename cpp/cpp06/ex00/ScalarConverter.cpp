@@ -76,17 +76,15 @@ void    convertdouble(std::string type)
 
 void    convertfloat(std::string type)
 {
-    std::cout << "is a float" << std::endl;
-    std::cout << "type: " << type << std::endl;
+    if (!type.empty() && type[type.size() - 1] == 'f') {
+        type.erase(type.size() - 1, 1);
+    }
     std::stringstream ss(type);
-    
-        std::cout << "fail: " << ss.fail() << std::endl;
     float   nb;
     ss >> nb;
-    std::cout << "nb: " << nb << std::endl;
     long int fInt    = static_cast<int>(nb);
     
-    std::cout << fInt << std::endl;
+    // std::cout << fInt << std::endl;
     if ((nb >= 0 && nb < 32 )|| nb == 127)
         std::cout << "char: Non displayable" << std::endl;
     else if (nb < 0 || nb > 127)
@@ -97,7 +95,7 @@ void    convertfloat(std::string type)
         std::cout << "int: impossible" << std::endl;
     else
         std::cout << "int:\t" << fInt << std::endl;
-    std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << static_cast<float>(nb) << "f" << std::endl;
+    std::cout << "float:\t" << std::fixed << std::setprecision(keeprecision(type)) << std::scientific << nb << "f" << std::endl;
     std::cout << "double:\t" << std::fixed  << std::setprecision(keeprecision(type)) << std::scientific << static_cast<double>(nb) << std::endl;
 }
 
